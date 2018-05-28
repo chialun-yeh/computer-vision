@@ -4,7 +4,7 @@ x = -a:1:a;
 [r, c] = size(img);
 F = zeros(r,c);
 tmp = zeros(r,c);
-g = gaussianDer(sigma);
+g = gaussianDerivative(sigma);
 Gdd = ((-sigma^2 + x.^2)./sigma^4).*gaussian(sigma);
 switch type
     case 'x'

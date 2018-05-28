@@ -1,4 +1,5 @@
+%Convolve an image with GaussianDerivative kernal
 function imOut = gaussianConv(img_path, sigma_x, sigma_y)
 img = imread(img_path);
-c = conv2(gaussianDer(sigma_y), gaussianDer(sigma_x), img,'same');
+imOut = conv2(gaussianDerivative(sigma_y), gaussianDerivative(sigma_x), img, 'same');
 end
