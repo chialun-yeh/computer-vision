@@ -1,7 +1,7 @@
 %% Lab5: Epipolar Geometry
 % We calculate the fundamental matrix F betwenn 2 images
-img1 = imread('TeddyBear\obj02_001.jpg');
-img2 = imread('TeddyBear\obj02_002.jpg');
+img1 = imread('TeddyBear/obj02_001.jpg');
+img2 = imread('TeddyBear/obj02_002.jpg');
 I1 = single(rgb2gray(img1)) ;
 I2 = single(rgb2gray(img2)) ;
 
@@ -19,6 +19,8 @@ set(h2,'color','y','linewidth',2) ;
 
 % Match the keypoints using the descriptors
 [matches, scores] = vl_ubcmatch(da, db, 5) ;
+% points1 = fa(1:3,matches(1,:));
+% points2 = fb(1:3,matches(2,:));
 points1 = fa(1:2,matches(1,:));
 points2 = fb(1:2,matches(2,:));
 figure; ax = axes;
@@ -46,3 +48,8 @@ F_norm = calFundamentalMatrix(p1, p2);
 %denormalize
 T = (T1+T2)/2;
 F_norm = T'*F_norm*T;
+
+%% Normalized Eight-point Algorithm with RANSAC
+  threshold = 10000;
+  [F_best,inliers_index] = Normalized_Eight_point_RANSAC(points1(:,sel), points2(:,sel),threshold);
+
