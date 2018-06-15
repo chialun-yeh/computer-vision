@@ -1,6 +1,8 @@
+%% Use the scale-invariant Harris corner detector to detect interest points
 close all; 
 clear;
 clc;
+
 % read image and detect interest points
 Img1 = imread('landscape-a.jpg');
 [frame1,des1] = harrisDecSiftDes(Img1);
@@ -11,6 +13,7 @@ size2 = length(des2);
 bestIdx = 0;
 secondBestIdx=0;
 match=[];
+
 %% Find matching descriptors using Euclidean distance
 for i = 1:size1
     best = 1000;
@@ -34,7 +37,7 @@ end
 
 %% show interest points on image
 figure(1); clf;
-imshow(cat(2, Img1, Img2))
+imshow(cat(2, rgb2gray(Img1), rgb2gray(Img2)))
 hold on
 h = line([frame1(1,match(1,:));frame2(1,match(2,:))+size(Img1,2)], [frame1(2,match(1,:));frame2(2,match(2,:))]);
 
