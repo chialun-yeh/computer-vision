@@ -1,4 +1,4 @@
-function SfM(points)
+function S = SfM(points)
 
 % Sizes
 [framesN, pointsN] = size(points);
@@ -32,4 +32,4 @@ C = chol(L, 'lower');
 M = M * C;
 S = pinv(C) * Shat;
 
-plot3(S(1, :), S(2,:), S(3,:),'b.');
+

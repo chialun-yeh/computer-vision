@@ -32,8 +32,8 @@ S = sqrt(W(1:3, 1:3)) * V(:, 1:3)';
 save('M','M')
 % % %solve for affine ambiguity
 A = M;
-%L0=inv(A' * A);
-L0 = pinv(A) * eye(2*framesN)*pinv(A');
+L0=inv(A' * A);
+%L0 = pinv(A) * eye(2*framesN)*pinv(A');
 % Solve for L
 L = lsqnonlin(@myfun,L0);
 % Recover C

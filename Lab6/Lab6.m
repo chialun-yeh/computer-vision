@@ -37,9 +37,8 @@ point_view_matrix = zeros(length(jpegFiles),size(new_matches{1},2));
 point_view_matrix(1,1:size(new_matches{1},2)) = new_matches{1}(1,:)';
 point_view_matrix(2,1:size(new_matches{1},2)) = new_matches{1}(2,:)';
 
-for i = 2:length(new_matches)
-    if i == length(new_matches)
-        j = 1;
+%%
+for i = 2:length(new_matches)-15
     current_size = size(point_view_matrix,2);
     [C, IA, IB] = intersect(new_matches{i}(1,:)', new_matches{i-1}(2,:));
     [C,ia] = setdiff(new_matches{i}(1,:)', new_matches{i-1}(2,:));
