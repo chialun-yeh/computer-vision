@@ -1,4 +1,4 @@
-function inliers_index = inliersList(F, p1, p2, t)
+function [d, inliers_index] = inliersList(F, p1, p2, t)
 %x1: correspondences ponit 1
 %x2: correspondences ponit 2
 %t : threshold to determine inliers

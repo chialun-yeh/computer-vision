@@ -1,5 +1,6 @@
 %% Lab5: Epipolar Geometry
 % We calculate the fundamental matrix F betwenn 2 images
+clear; clc
 img1 = imread('TeddyBear/obj02_001.jpg');
 img2 = imread('TeddyBear/obj02_002.jpg');
 I1 = single(rgb2gray(img1)) ;

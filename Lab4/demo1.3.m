@@ -2,10 +2,8 @@
 % The sum of the euclidean distance between the tracked points and the groundtruth is
 % plotted for every frame.
 
-function demo2()
-%load points
+%function demo2()
 Points = textread('model house\measurement_matrix.txt');
-
 for num = 1:101;
     imageLoc = ['model house\frame' num2str(num, '%08d') '.jpg'];
     im = double(imread(imageLoc))/255;
@@ -21,12 +19,10 @@ end
 
 %track points
 [pointsx,pointsy]=LKtracker(Points,Imf,1);
-
 save('Xpoints','pointsx')
 save('Ypoints','pointsy')
 
-
-%% euclidean distance per frame
+% euclidean distance per frame
 dis_x = Points(1:2:end, :)-pointsx;
 dis_y = Points(2:2:end, :)-pointsy;
 figure(2)
@@ -35,4 +31,4 @@ LS=sum(eudis,2);
 plot(LS)
 xlabel('image #')
 ylabel('sum of LS-error')
-end
+%end
