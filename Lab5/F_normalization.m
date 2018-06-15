@@ -14,3 +14,4 @@ F_norm = calFundamentalMatrix(p1, p2);
 %denormalize
 F_norm = T2'*F_norm*T1;
 end
+

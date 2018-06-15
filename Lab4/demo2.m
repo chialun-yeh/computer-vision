@@ -23,7 +23,7 @@ Points = textread('model house/measurement_matrix.txt');
 framesN = framesN / 2;
 
 % Center points
-pointsCenter = Points - repmat(mean(Points, 2), 1, pointsN);
+pointsCenter = Points - repmat(sum(Points, 2) / pointsN, 1, pointsN);
 
 % % %singular value decomposition
 [U,W,V] = svd(pointsCenter);
@@ -60,10 +60,10 @@ framesN = framesN / 2;
 pointsCenter = Points - repmat(sum(Points, 2) / pointsN, 1, pointsN);
 
 % % %singular value decomposition
+
 [U,W,V] = svd(pointsCenter);
 M = U(:, 1:3) * sqrt(W(1:3, 1:3));
 S = sqrt(W(1:3, 1:3)) * V(:, 1:3)';
-
 save('M','M')
 
 %solve for affine ambiguity using non-linear least squares????

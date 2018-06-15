@@ -23,17 +23,18 @@ Points = textread('model house/measurement_matrix.txt');
 framesN = framesN / 2;
 
 % Center points
-pointsCenter = Points - repmat(mean(Points, 2), 1, pointsN);
+pointsCenter = Points - repmat(sum(Points, 2) / pointsN, 1, pointsN);
 
 % % %singular value decomposition
-[U,W,V] = svd(points);
+[U,W,V] = svd(Points);
 M = U(:, 1:3) * sqrt(W(1:3, 1:3));
 S = sqrt(W(1:3, 1:3)) * V(:, 1:3)';
 
+>>>>>>> b8b38b4c3cb0c05b603497f541123473dd626326
 save('M','M')
-
 % % %solve for affine ambiguity
-A = M
+<<<<<<< HEAD
+A = M;
 L0=inv(A' * A);
 
 % Solve for L
@@ -50,10 +51,8 @@ plot3(S(1,:),S(2,:),S(3,:),'.b');
 % % Repeat the same procedure 
 
 Points = zeros(size(Points));
-
 load('Xpoints')
 load('Ypoints')
-
 Points(1:2:end,:)=pointsx;
 Points(2:2:end,:)=pointsy;
 
@@ -64,18 +63,26 @@ framesN = framesN / 2;
 pointsCenter = Points - repmat(sum(Points, 2) / pointsN, 1, pointsN);
 
 % % %singular value decomposition
+<<<<<<< HEAD
+[U,W,V] = svd(pointsCenter);
+=======
 [U,W,V] = svd(Points);
+>>>>>>> b8b38b4c3cb0c05b603497f541123473dd626326
 M = U(:, 1:3) * sqrt(W(1:3, 1:3));
 S = sqrt(W(1:3, 1:3)) * V(:, 1:3)';
 
 save('M','M')
 
 %solve for affine ambiguity using non-linear least squares????
+<<<<<<< HEAD
+A = M;
+L0=inv(A' * A);
+=======
 A = M
 L0=inv(A' * A);
 
+>>>>>>> b8b38b4c3cb0c05b603497f541123473dd626326
 L = lsqnonlin(@myfun,L0);
-
 C = chol(L,'lower');
 M = M*C;
 S = pinv(C)*S;

@@ -49,6 +49,7 @@ F_norm = calFundamentalMatrix(p1, p2);
 F_norm = T2'*F_norm*T1;
 
 %% Normalized Eight-point Algorithm with RANSAC
-threshold = 1000;
-[F_best,inliers_index] = Normalized_Eight_point_RANSAC(points1, points2,threshold);
+threshold = 200;
+[F_best,inliers_index,distance] = Normalized_Eight_point_RANSAC(points1, points2,threshold);
+histogram(distance)
 
