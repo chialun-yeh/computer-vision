@@ -23,16 +23,15 @@ Points_norm = Points-B;
 
 % % %singular value decomposition
 [U,W,V] = svd(Points_norm);
-U = U(:,1:3);
-W = W(1:3,1:3);
-V = V(:,1:3);
-M = U*(W.^0.5);
-S = (W.^0.5)*V';
+% Decompose into measurements M and shape S
+% Only top 3 singular values
+M = U(:, 1:3) * sqrt(W(1:3, 1:3));
+S = sqrt(W(1:3, 1:3)) * V(:, 1:3)';
+
 save('M','M')
 %% solve for affine ambiguity
-A = M;
-L0=
-
+A  = M;
+L0 = inv(A' * A);
 % Solve for L
 L = lsqnonlin(@myfun,L0);
 % Recover C
