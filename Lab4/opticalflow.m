@@ -10,7 +10,7 @@
 %- F: vector of flows
 %- ind: indexes of the flow vectors
 function [F,ind] = opticalflow(im1, im2, sigma)
-
+addpath('C:\Users\sharo\Documents\Delft\CV\computer-vision\Lab1')
 % if no images are provided load standard images
 if nargin < 1
     im1 = imread('synth1.pgm');

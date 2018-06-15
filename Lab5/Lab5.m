@@ -1,7 +1,7 @@
 %% Lab5: Epipolar Geometry
 % We calculate the fundamental matrix F betwenn 2 images
-img1 = imread('TeddyBear\obj02_001.jpg');
-img2 = imread('TeddyBear\obj02_002.jpg');
+img1 = imread('TeddyBear/obj02_001.jpg');
+img2 = imread('TeddyBear/obj02_002.jpg');
 I1 = single(rgb2gray(img1)) ;
 I2 = single(rgb2gray(img2)) ;
 
@@ -11,14 +11,16 @@ I2 = single(rgb2gray(img2)) ;
 [fb, db] = vl_sift(I2,'PeakThresh',8) ;
 
 % Check the keypoints
-image(img1)
+imshow(img1)
 h1 = vl_plotframe(fa);
 h2 = vl_plotframe(fa);
 set(h1,'color','k','linewidth',3) ;
 set(h2,'color','y','linewidth',2) ;
 
 % Match the keypoints using the descriptors
-[matches, scores] = vl_ubcmatch(da, db, 5) ;
+[matches, scores] = vl_ubcmatch(da, db, 1) ;
+% points1 = fa(1:3,matches(1,:));
+% points2 = fb(1:3,matches(2,:));
 points1 = fa(1:2,matches(1,:));
 points2 = fb(1:2,matches(2,:));
 figure; ax = axes;
@@ -44,5 +46,9 @@ p2 = p2(1:2,:);
 % calculate new F
 F_norm = calFundamentalMatrix(p1, p2);
 %denormalize
-T = (T1+T2)/2;
-F_norm = T'*F_norm*T;
+F_norm = T2'*F_norm*T1;
+
+%% Normalized Eight-point Algorithm with RANSAC
+threshold = 1000;
+[F_best,inliers_index] = Normalized_Eight_point_RANSAC(points1, points2,threshold);
+

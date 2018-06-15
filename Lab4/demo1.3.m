@@ -1,5 +1,5 @@
-% this function gives a demo of the Lucas Kanade tracker. The sum of the
-% euclidean distance between the tracked points and the groundtruth is
+% this function gives a demo of the Lucas Kanade tracker. 
+% The sum of the euclidean distance between the tracked points and the groundtruth is
 % plotted for every frame.
 
 function demo2()
