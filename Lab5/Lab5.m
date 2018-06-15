@@ -18,7 +18,7 @@ set(h1,'color','k','linewidth',3) ;
 set(h2,'color','y','linewidth',2) ;
 
 % Match the keypoints using the descriptors
-[matches, scores] = vl_ubcmatch(da, db, 5) ;
+[matches, scores] = vl_ubcmatch(da, db, 1) ;
 % points1 = fa(1:3,matches(1,:));
 % points2 = fb(1:3,matches(2,:));
 points1 = fa(1:2,matches(1,:));
@@ -50,6 +50,6 @@ T = (T1+T2)/2;
 F_norm = T'*F_norm*T;
 
 %% Normalized Eight-point Algorithm with RANSAC
-  threshold = 10000;
-  [F_best,inliers_index] = Normalized_Eight_point_RANSAC(points1(:,sel), points2(:,sel),threshold);
-
+  threshold = 200;
+  [F_best,inliers_index,distance] = Normalized_Eight_point_RANSAC(points1, points2,threshold);
+  histogram(distance)

@@ -16,25 +16,25 @@
 function [M,S] = demo3
 close all
 % % %load points
-Points = textread('model house\measurement_matrix.txt');
+Points = textread('model house/measurement_matrix.txt');
 % % %Shift the mean of the points to zero using "repmat" command
+% Sizes
+[framesN, pointsN] = size(Points);
+framesN = framesN / 2;
 
+% Center points
+pointsCenter = Points - repmat(sum(Points, 2) / pointsN, 1, pointsN);
 
 % % %singular value decomposition
 [U,W,V] = svd(Points);
-
-U = 
-W = 
-V = 
-
-M = 
-S = 
+M = U(:, 1:3) * sqrt(W(1:3, 1:3));
+S = sqrt(W(1:3, 1:3)) * V(:, 1:3)';
 
 save('M','M')
 
 % % %solve for affine ambiguity
-A = 
-L0=
+A = M
+L0=inv(A' * A);
 
 % Solve for L
 L = lsqnonlin(@myfun,L0);
@@ -57,29 +57,28 @@ load('Ypoints')
 Points(1:2:end,:)=pointsx;
 Points(2:2:end,:)=pointsy;
 
+[framesN, pointsN] = size(Points);
+framesN = framesN / 2;
 
-%Shift the mean of the points to zero
+% Center points
+pointsCenter = Points - repmat(sum(Points, 2) / pointsN, 1, pointsN);
 
-%singular value decomposition
+% % %singular value decomposition
 [U,W,V] = svd(Points);
+M = U(:, 1:3) * sqrt(W(1:3, 1:3));
+S = sqrt(W(1:3, 1:3)) * V(:, 1:3)';
 
-U = 
-W = 
-V = 
-
-M = 
-S = 
-
-%solve for affine ambiguity using non-linear least squares
-A = 
-L0=
 save('M','M')
+
+%solve for affine ambiguity using non-linear least squares????
+A = M
+L0=inv(A' * A);
 
 L = lsqnonlin(@myfun,L0);
 
 C = chol(L,'lower');
-M = 
-S = 
+M = M*C;
+S = pinv(C)*S;
 
 hold on
 plot3(S(1,:),S(2,:),S(3,:),'.m');

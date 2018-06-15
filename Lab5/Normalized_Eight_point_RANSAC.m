@@ -1,10 +1,10 @@
-function [F_best,inliers_index] = Normalized_Eight_point_RANSAC(points1,points2,threshold)
+function [F_best,inliers_index,distance] = Normalized_Eight_point_RANSAC(points1,points2,threshold)
 
 %init
 [d length]= size(points1);
 F_current = zeros(d);
 max_inliers = 0;
-k_max = 2;
+k_max = 200;
 k = 0;
 
 while k < k_max
@@ -14,7 +14,7 @@ while k < k_max
     %calculate a normalized fundamental matrix F
     F_norm = F_normalization(points1(:,sel), points2(:,sel));
     %get the other correspondences that agree with this fundamental matrix
-    inliers_index = inliersList(F_norm, points1, points2, threshold);
+    [distance,inliers_index] = inliersList(F_norm, points1, points2, threshold);
     %count the number of inliers
     if isempty(inliers_index) ~= 0
         if max_inliers < length(inliers_index)
