@@ -38,14 +38,17 @@ point_view_matrix(1,1:size(new_matches{1},2)) = new_matches{1}(1,:)';
 point_view_matrix(2,1:size(new_matches{1},2)) = new_matches{1}(2,:)';
 
 %%
-for i = 2:length(new_matches)-15
+for i = 2:length(new_matches)-1
     current_size = size(point_view_matrix,2);
-    [C, IA, IB] = intersect(new_matches{i}(1,:)', new_matches{i-1}(2,:));
-    [C,ia] = setdiff(new_matches{i}(1,:)', new_matches{i-1}(2,:));
+    [C, IA, IB] = intersect(new_matches{i}(1,:)', point_view_matrix(i,:));
+    [C,ia] = setdiff(new_matches{i}(1,:)', point_view_matrix(i,:));
     point_view_matrix(i+1,IB) = new_matches{i}(2,IA);
     point_view_matrix = [point_view_matrix zeros(size(point_view_matrix,1),length(ia))];
     point_view_matrix(i, current_size+1:size(point_view_matrix,2)) = new_matches{i}(1,ia);
     point_view_matrix(i+1, current_size+1:size(point_view_matrix,2)) = new_matches{i}(2,ia);
 end
-
-% How to do the last frame?
+%%
+% Do the last frame 
+[C, IA, IB] = intersect(new_matches{20}(1,:)', point_view_matrix(1,:));
+%[C,ia] = setdiff(new_matches{20}(1,:)', point_view_matrix(1,:));
+point_view_matrix
