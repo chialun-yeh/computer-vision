@@ -14,7 +14,6 @@ pointsCenter = points - repmat(sum(points, 2) / pointsN, 1, pointsN);
 [U,W,V] = svd(pointsCenter);
 M = U(:, 1:3) * sqrt(W(1:3, 1:3));
 S = sqrt(W(1:3, 1:3)) * V(:, 1:3)';
-save('M','M')
 % % %solve for affine ambiguity
 A = M;
 L0 = inv(A' * A);
