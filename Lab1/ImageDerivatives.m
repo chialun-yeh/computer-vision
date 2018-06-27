@@ -25,17 +25,17 @@ switch type
         end
     case'xy'
         for i = 1:r
-            tmp(i,:) = conv(img(i,:), g, 'same');
+            tmp(i,:) = conv(img(i,:), Gdd, 'same');
         end
         for i = 1:c
-            F(:,i) = conv(tmp(:,i), g, 'same');
+            F(:,i) = conv(tmp(:,i), Gdd, 'same');
         end
     case'yx'
         for i = 1:c
-            tmp(:,i) = conv(img(:,i), g, 'same');
+            tmp(:,i) = conv(img(:,i), Gdd, 'same');
         end
         for i = 1:r
-            F(i,:) = conv(tmp(i,:), g, 'same');
+            F(i,:) = conv(tmp(i,:), Gdd, 'same');
         end
 end
 end

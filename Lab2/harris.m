@@ -8,6 +8,7 @@ function [r, c] = harris(img, sigma)
 
 gamma = 0.7; % The derivative-scale is gamma times the integration scale
 dScale = gamma*sigma;
+
 % Calculate Gaussian Derivatives at derivative-scale
 Ix = conv2(img, gaussianDerivative(dScale), 'same');
 Iy = conv2(img, gaussianDerivative(dScale)', 'same');
@@ -24,12 +25,11 @@ M(:,:,3) = Iy.*Iy;
 M = imfilter(M, fspecial('gaussian', ceil(sigma*6+1), sigma), 'replicate', 'same');
 
 % Compute the cornerness R
-trace = zeros(size(Ix,1), size(Ix,2));
+k=0.05; % empirical 0.04-0.06
 trace = M(:,:,1)+ M(:,:,3);
-det = zeros(size(Ix,1), size(Ix,2));
 det = M(:,:,1).*M(:,:,3)-(M(:,:,2).* M(:,:,2));
 R = zeros(size(Ix,1), size(Ix,2));
-R = det-0.05.*(trace.^2);
+R = det- (k.*(trace.^2));
 
 % Set the threshold 
 threshold = 0.01*max(max(R));

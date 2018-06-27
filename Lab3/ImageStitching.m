@@ -1,3 +1,5 @@
+addpath('C:\Users\sharo\Documents\Delft\CV\computer-vision\Lab2');
+
 Img1 = imread('left.jpg');
 Img2 = imread('right.jpg');
 T = imageAlign('left.jpg', 'right.jpg')
@@ -19,7 +21,7 @@ cornerMatrix = [ 1 w2 1 w2;
                  1 1 1 1];
 
 m2 = cornerMatrix' * inv(T)' ;
-matrix = cat(2, cornerMatrix, m2')
+matrix = cat(2, cornerMatrix, m2');
 maxValue = max(matrix,[],2);
 x1 = 212;
 x2 = 493;
@@ -36,11 +38,6 @@ for i =1:y2
        panorama(i,j) = nanmean(pixels);
     end
 end
-
-       
-now = int8(panorama);
-imshow(gray1)
-imshow(image_transformed2)
-hold on
+imshow(panorama,[])
 
 

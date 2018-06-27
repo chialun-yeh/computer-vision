@@ -1,5 +1,14 @@
-%Convolve an image with GaussianDerivative kernal
-function imOut = gaussianConv(img_path, sigma_x, sigma_y)
-img = imread(img_path);
-imOut = conv2(gaussianDerivative(sigma_y), gaussianDerivative(sigma_x), img, 'same');
+%Convolve an image with 2 separate 1D Gaussian kernal
+function imOut = gaussianConv(img, sigma_x, sigma_y)
+[r, c] = size(img);
+F = zeros(r,c);
+x = gaussian (sigma_x);
+y = gaussian (sigma_y);
+for i = 1:r
+    F(i,:) = conv(img(i,:), x, 'same');
+end
+for i = 1:c
+    F(:,i) = conv(F(:,i), y, 'same');
+end
+imOut = F;
 end

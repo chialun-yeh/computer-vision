@@ -2,7 +2,7 @@
 close all; 
 clear;
 clc;
-
+addpath('C:\Users\sharo\Documents\Delft\CV\computer-vision\Lab1');
 % read image and detect interest points
 Img1 = imread('landscape-a.jpg');
 [frame1,des1] = harrisDecSiftDes(Img1);
@@ -36,11 +36,13 @@ for i = 1:size1
 end
 
 %% show interest points on image
-figure(1); clf;
-imshow(cat(2, rgb2gray(Img1), rgb2gray(Img2)))
-hold on
-h = line([frame1(1,match(1,:));frame2(1,match(2,:))+size(Img1,2)], [frame1(2,match(1,:));frame2(2,match(2,:))]);
+%figure(1); clf;
+%imshow(cat(2, Img1, Img2))
+%hold on
+%h = line([frame1(1,match(1,:));frame2(1,match(2,:))+size(Img1,2)], [frame1(2,match(1,:));frame2(2,match(2,:))]);
 
-
+showMatchedFeatures(Img1,Img2, frame1(1,match(1,:)),frame2(1,match(2,:)),'montage','Parent',ax);
+%title(ax, 'Candidate point matches');
+%legend(ax, 'Matched points 1','Matched points 2');
 
 
