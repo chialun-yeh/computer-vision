@@ -15,6 +15,6 @@ F = reshape(V(:,9),[3 3]);
 %enforce singularity of F
 [Uf, Sf, Vf] = svd(F);
 Sf(3,3) = 0;
-F_new = Uf*Sf*Vf;
+F_new = Uf*Sf*Vf';
 
 end

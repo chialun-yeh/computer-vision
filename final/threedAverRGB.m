@@ -1,14 +1,13 @@
-function [averRGB] = threedAverRGB(point_matrix_cell,image_cell)
+function [averRGB] = threedAverRGB(point_matrix_cell,images)
 %point_matrix_cell: 1x19
 %image_cell: 1x19
 %averRGB: 1x19 cell
-averRGB = cell(size(point_matrix_cell))
+averRGB = cell(size(point_matrix_cell));
+c = [1:length(images) 1 2];
 
 % iterate images
 for i = 1:length(point_matrix_cell)
-    
     twoDpoints = point_matrix_cell{i};
-    image = image_cell{i};
     num = length(twoDpoints(:,1))/2;
     averRGB_i = zeros(num,length(twoDpoints));
     
@@ -20,13 +19,20 @@ for i = 1:length(point_matrix_cell)
         
         % get rgb per matches
         for k = 1:num
-            position = twoDpoints(k:(k+1),j);
-            redValue = redValue + image(position(2), position(1), 1);
-            greenValue = greenValue + image(position(2), position(1), 2);
-            blueValue = blueValue + image(position(2), position(1), 3);
+            positionx = round(twoDpoints(k,j));
+            positiony = round(twoDpoints(k+1,j));
+            redValue = redValue + images{c(i+k-1)}(positiony, positionx, 1);
+            greenValue = greenValue + images{c(i+k-1)}(positiony, positionx, 2);
+            blueValue = blueValue + images{c(i+k-1)}(positiony, positionx, 3);
         end
+        redValue = images{i}(positiony, positionx, 1);
+        greenValue = images{i}(positiony, positionx, 2);
+        blueValue = images{i}(positiony, positionx, 3);
+        averRGB_i(:,j) = [uint8(redValue); uint8(greenValue) ; uint8(blueValue)];
+        
         % take average rgb 
-        averRGB_i(:,j) = [redValue/num; greenValue/num ; blueValue/num]
+        %averRGB_i(:,j) = [redValue/num; greenValue/num ; blueValue/num];
+        
     end
     averRGB{i} = averRGB_i;
 end      

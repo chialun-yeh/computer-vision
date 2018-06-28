@@ -1,7 +1,7 @@
 clear
 clc
-path = '/Users/xuecho/Documents/GitHub/computer-vision/final/textDescriptor/haraff/';
-path2= '/Users/xuecho/Documents/GitHub/computer-vision/final/textDescriptor/hesaff/';
+path = '/Users/sharo/Documents/Delft/CV/computer-vision/final/textDescriptor/haraff/';
+path2= '/Users/sharo/Documents/Delft/CV/computer-vision/final/textDescriptor/hesaff/';
 
 haraff = dir(fullfile('textDescriptor','haraff','*.txt'));
 hesaff = dir(fullfile('textDescriptor','hesaff','*.txt'));
@@ -27,4 +27,3 @@ for i=1:length(hesaff)
     hesaff_frame{i,1} = a(:,1:2)';
     fprintf('%i\n',i);
 end
-
