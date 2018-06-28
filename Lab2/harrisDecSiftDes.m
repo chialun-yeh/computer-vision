@@ -7,7 +7,6 @@ end
 sigma = 1:12;
 filtered_img = zeros(h,w,length(sigma));
 scaleInvariantPoints = [];
-
 %calculate Laplacian of Gaussian for each scale
 for s = sigma  
     filtered_img(:,:,s) = s^2.*imfilter(img, fspecial('log', ceil(s*6+1), s), 'replicate', 'same');
@@ -37,7 +36,7 @@ paras=[scaleInvariantPoints(:,2)';scaleInvariantPoints(:,1)';2.*scaleInvariantPo
 %show interest points on image
 imshow(img); hold on
 perm = randperm(size(frame,2));
-sel = perm(1:200);
+sel = perm(:);
 h1 = vl_plotframe(frame(:,sel));
 set(h1,'color','k')
 

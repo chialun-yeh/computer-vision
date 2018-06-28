@@ -14,7 +14,6 @@ pointsCenter = points - repmat(sum(points, 2) / pointsN, 1, pointsN);
 [U,W,V] = svd(pointsCenter);
 M = U(:, 1:3) * sqrt(W(1:3, 1:3));
 S = sqrt(W(1:3, 1:3)) * V(:, 1:3)';
-save('M','M')
 % % %solve for affine ambiguity
 A = M;
 L0 = inv(A' * A);
@@ -27,7 +26,7 @@ L = lsqnonlin(@myfun,L0);
 % Recover C
 
 % find the nearest PD matrix
-Lhat = nearestSPD(L)
+Lhat = nearestSPD(L);
 C = chol(Lhat,'lower');
 
 %C = chol(L,'lower');
@@ -35,6 +34,6 @@ C = chol(Lhat,'lower');
 % Update M and S
 M = M*C;
 S = pinv(C)*S;
-plot3(S(1,:),S(2,:),S(3,:),'.b');
+%plot3(S(1,:),S(2,:),S(3,:),'.b');
 
 end

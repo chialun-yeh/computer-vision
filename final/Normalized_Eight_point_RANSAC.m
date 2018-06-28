@@ -5,7 +5,7 @@ function [F_best,inliers_index,distance] = Normalized_Eight_point_RANSAC(points1
 [d length]= size(points1);
 F_current = zeros(d);
 max_inliers = 0;
-k_max = 2000;
+k_max = 5000;
 k = 0;
 
 while k < k_max

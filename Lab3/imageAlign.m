@@ -1,12 +1,20 @@
 function [T] = imageAlign(img1, img2)
+% inputs: 
+% img1: path to the first image
+% img2: path to the second image
+% output T: The affine transformation matrix
+
+% read the images to be stitched
 im1 = imread(img1);
-[frames1, desc1] = harrisDecSiftDes(im1);
 im2 = imread(img2);
+% detect harris corners
+[frames1, desc1] = harrisDecSiftDes(im1);
 [frames2, desc2] = harrisDecSiftDes(im2);
 % matches: descriptor indexs; matches(1,:) is idx in image 1
 [matches] = vl_ubcmatch(desc1,desc2);
 
-N=200;  %%Find N
+%% RANSAC
+N = 1000;
 maxInlier = 10;
 bestInliers = 0;
 bestModel=0;
