@@ -14,7 +14,7 @@ function [F_final, max_idx] = Normalized_Eight_point_RANSAC(points1,points2,thre
     % RANSAC
     max_inliers = 0;
     max_idx = 0;
-    iter = 1000;
+    iter = 2000;
     k = 0;
     while k < iter
         %First pick 8 point correspondences randomly 

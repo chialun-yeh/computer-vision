@@ -1,11 +1,9 @@
 %% Read in all images and save all descriptors
 clear; clc;
-dir_path = 'TeddyBear';
+dir_path = 'model_castle';
 filePattern = fullfile(dir_path, '*.JPG');
 jpegFiles = dir(filePattern);
 numImg = length(jpegFiles);
-frame = cell(1,numImg);
-descriptor = cell(1,numImg);
 images = cell(1,numImg);
 for k = 1:length(jpegFiles)
     baseFileName = jpegFiles(k).name;
@@ -13,34 +11,45 @@ for k = 1:length(jpegFiles)
     fprintf(1, 'Reading %s\n', fullFileName);
     img = imread(fullFileName);
     images{k} = img;
-    im = single(rgb2gray(img));
-    [f, d] = vl_sift(im,'PeakThresh',5) ;
-    frame{k} = f;
-    descriptor{k} = d;
+end
+%% Load descriptors
+load('descriptor_frame/haraff_descriptor');
+load('descriptor_frame/haraff_frame');
+load('descriptor_frame/hesaff_descriptor');
+load('descriptor_frame/hesaff_frame');
+descriptor = haraff_descriptor;
+frame = haraff_frame;
+for i = 1:numImg
+    descriptor{i} = [descriptor{i} hesaff_descriptor{i}];
+    frame{i} = [frame{i} hesaff_frame{i}];
 end
 
 %% Matching
 c = [1:numImg 1 2 3];
-match_thres = 1.1;
+match_thres = 1.5;
+all_matches = cell(1,numImg);
 for i = 1:numImg
     % match feature points
     [matches, scores] = vl_ubcmatch(descriptor{i}, descriptor{c(i+1)}, match_thres) ;
+    all_matches{i} = matches;
 end
+save('matches15', 'all_matches');
+
 
 %% Apply normalized 8-point RANSAC algorithm to find best matches
-c = [1:numImg 1 2 3];
-match_thres = 1.1;
-ransac_thres = 25;
+ransac_thres = 100;
 ransac_matches = cell(1,numImg);
 for i = 1:numImg
     % match feature points
-    [matches, scores] = vl_ubcmatch(descriptor{i}, descriptor{c(i+1)}, match_thres) ;
+    %[matches, scores] = vl_ubcmatch(descriptor{i}, descriptor{c(i+1)}, match_thres) ;
+    matches = all_matches{i};
     points1 = frame{i}(1:2,matches(1,:));
     points2 = frame{c(i+1)}(1:2,matches(2,:));
     % do 8-point RANSAC
     [F_final, max_idx] = Normalized_Eight_point_RANSAC(points1,points2,ransac_thres);
     ransac_matches{i} = matches(:,max_idx);
 end
+save('matches12_ransac100', 'ransac_matches');
 
 %% Chaining
 point_view_matrix = build_point_view_matrix(ransac_matches);
@@ -109,3 +118,7 @@ end
 %%
 ptCloud = pointCloud(S','C',all_color');
 pcshow(ptCloud)
+
+%%
+save('3d_together','S');
+save('color','all_color')

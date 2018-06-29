@@ -11,7 +11,7 @@ for i = 1:length(camera)
 end
 
 lsqnonlinoptions=optimset('Algorithm','Levenberg-Marquardt');
-optimal_MS = lsqnonlin(@(x)bundle_adjustment2(x,point_matrix),MS,[],[],lsqnonlinoptions);
+optimal_MS = lsqnonlin(@(x)bundle_adjustment_function(x,point_matrix),MS,[],[],lsqnonlinoptions);
 
 optimal_M = [];
 optimal_S = [];
