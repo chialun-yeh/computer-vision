@@ -12,8 +12,9 @@ for i = 1:numImg
     MS_i = MS(:,:,i);
     M = MS_i(1:m,:);
     S = MS_i(m+1:end,:)';
-    error =  sum(sum( sqrt(M*S - point_matrix(:,:,i))));
-    E = [E,error];
+    dis = M*S - point_matrix(:,:,i);
+    %error =  sum(sum( (M*S - point_matrix(:,:,i)).^2));
+    E = [E,dis];
 end 
 
 % then Using lsqnonlin Matlab function.
