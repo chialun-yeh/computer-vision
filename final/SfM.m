@@ -19,7 +19,7 @@ save('M','M');
 A = M;
 L0 = inv(A' * A);
 %L0 = pinv(A) * eye(2*framesN)*pinv(A');
-% Solve for L
+%Solve for L
 %Cholskey factorization takes positive definite matrices by definition. 
 %There is an option in MATLAB? that [R,p] = chol(L) where L is not positive definite then p is a positive integer and MATLAB? does not generate an error. 
 %Note that matrix L is a symmetric matrix by construction of the affine ambiguity matrix, so make sure that L is constructed correctly. 

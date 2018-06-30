@@ -19,17 +19,12 @@ for i = 1:length(point_matrix_cell)
         
         % get rgb per matches
          for k = 1:num
-             positionx = twoDpoints(k,j);
-             positiony = twoDpoints(k+1,j);
+             positionx = twoDpoints(2*k-1,j);
+             positiony = twoDpoints(2*k,j);
              redValue = redValue + images{c(i+k-1)}(positiony, positionx, 1)/3;
              greenValue = greenValue + images{c(i+k-1)}(positiony, positionx, 2)/3;
              blueValue = blueValue + images{c(i+k-1)}(positiony, positionx, 3)/3;
-         end
-
-        %redValue = images{i}(positiony, positionx, 1);
-        %greenValue = images{i}(positiony, positionx, 2);
-        %blueValue = images{i}(positiony, positionx, 3);
-        
+         end     
 
         averRGB_i(:,j) = [redValue; greenValue ; blueValue];
         

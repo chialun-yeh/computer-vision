@@ -19,13 +19,10 @@ end
 % Append the last frame
 % match 16-1 with current 16
 [~, b, a] = intersect(point_view_matrix(numFrame+1,:)', point_view_matrix(1,1:tmp));
-point_view_matrix(numFrame-3:numFrame,a) = point_view_matrix(numFrame-3:numFrame,b);
-point_view_matrix = point_view_matrix(1:numFrame, :);
+point_view_matrix(numFrame-2:numFrame,a) = point_view_matrix(numFrame-2:numFrame,b);
+point_view_matrix(:,b) = [];
+point_view_matrix = point_view_matrix(1:numFrame,:);
+id = find((sum(point_view_matrix > 0, 1) < 2)~=0, 1);
+point_view_matrix = point_view_matrix(:,1:id);
 
-%[~, b, a] = intersect(new_matches{numFrame}(1,:)', point_view_matrix(numFrame,:));
-%[~, c, d] = intersect(new_matches{numFrame}(2, :), point_view_matrix(1, :)); 
-%point_view_matrix(numFrame,d) = new_matches{numFrame}(1,c);
-%[~,l,k] = intersect(b,c);
-%tmp = point_view_matrix(numFrame-1:numFrame,a(l));
-%point_view_matrix(numFrame-1:numFrame,d(k)) = tmp;
 end
